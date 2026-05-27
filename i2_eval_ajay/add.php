@@ -1,0 +1,179 @@
+<?php
+include 'db.php';
+
+if (!isset($_SESSION['id'])) {
+    header('Location:login.php');
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = $_POST['name'];
+    $description = $_POST['description'];
+    $price = $_POST['price'];
+    $image_name = $_FILES['image']['name'];
+    $category = $_POST['category'];
+    $user_id = $_SESSION['id'];
+    move_uploaded_file($_FILES['image']['tmp_name'], "images/$image_name");
+
+    $sql = $con->prepare('insert into menu(iname,description,price,category,image,user_id) values (?,?,?,?,?,?)');
+    $sql->bind_param('sssssi', $name, $description, $price, $category, $image_name, $user_id);
+
+
+    if ($sql->execute()) {
+        header('Location:dashboard.php');
+    } else {
+        echo 'not added';
+    }
+}
+
+
+
+
+
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS v5.3.8 -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+        crossorigin="anonymous" />
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <h2>RMS</h2>
+                </a>
+                <button
+                    class="navbar-toggler d-lg-none"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapsibleNavId"
+                    aria-controls="collapsibleNavId"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="collapsibleNavId">
+                    <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+                        <li class="nav-item">
+                            <a
+                                class="nav-link active"
+                                href="dashboard.php"
+                                aria-current="page">Home <span class="visually-hidden">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="add.php">add</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="view.php">view</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="epdf.php">pdf</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex my-2 my-lg-0" action="logout.php">
+                        <button
+                            class="btn btn-outline-success my-2 my-sm-0"
+                            type="submit">
+                            Logout
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="container text-center py-3 my-4 rounded shadow border col-6">
+            <h2>Add Menu</h2>
+            <form action="" method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="" class="form-label">Name</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        name="name"
+                        id=""
+                        aria-describedby="helpId"
+                        placeholder="" />
+                </div>
+                <div class="mb-3">
+                    <label for="" class="form-label">Description</label>
+                    <textarea
+                        class="form-control"
+                        name="description"
+                        id=""
+                        rows="3"></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="" class="form-label">Price</label>
+                    <input
+                        type="number"
+                        class="form-control"
+                        name="price"
+                        id=""
+                        aria-describedby="helpId"
+                        placeholder="" />
+                </div>
+                <div class="mb-3 rounded p-2">
+                    <label for="" class="form-label">category</label>
+                    <select name="category" id="" class="rounded p-2">
+                        <option value="starter">starter</option>
+                        <option value="main_course">main course</option>
+                        <option value="desert">desert</option>
+                        <option value="drink">drink</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="" class="form-label">Choose image</label>
+                    <input
+                        type="file"
+                        class="form-control"
+                        name="image"
+                        id=""
+                        placeholder=""
+                        aria-describedby="fileHelpId" />
+                </div>
+
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+        </div>
+    </main>
+    <footer>
+        <!-- place footer here -->
+    </footer>
+    <!-- Bootstrap JavaScript Bundle (includes Popper) -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
