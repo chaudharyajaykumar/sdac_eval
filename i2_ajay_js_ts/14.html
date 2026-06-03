@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>login with us</h2>
+    name: <input type="text" id="name" /><br />
+    email: <input type="email" id="email" /><br />
+    password: <input type="password" id="pass" /><br />
+    <button onclick="login()">register</button>
+    <script>
+      function login() {
+        let name = document.getElementById("name").value;
+        let email = document.getElementById("email").value;
+        let pass = document.getElementById("pass").value;
+
+        let n_regex = /^[A-Za-z\s]+$/;
+        let e_regex = /^[A-Za-z\d%.+-]+@[A-Za-z\d.-]+\.[A-Za-z]{3,8}$/;
+        let p_regex =
+          /^(?=.*[A-Z])(?=.*[a-z])(?=.*[\d])(?=.*[!@#$%^*-])[(?=.*[A-Z])[A-Za-z\d!@#$%^&*-]{8,15}$/;
+
+        if (!name || !email || !pass) {
+          alert("enter all field");
+          return;
+        }
+
+        let customer = JSON.parse(localStorage.getItem("customer")) || [];
+
+        if (
+          cutomer.name != name ||
+          customer.email != email ||
+          customer.pass != pass
+        ) {
+          alert("enter valid credentail");
+          return;
+        }
+      }
+    </script>
+  </body>
+</html>

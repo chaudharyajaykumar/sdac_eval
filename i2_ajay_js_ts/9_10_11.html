@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    add new element: <input type="text" id="value" /><br />
+    update element: <input type="text" id="value1" /><br />
+
+    <button onclick="add()">add</button>
+    <button onclick="update()">update</button>
+    <button onclick="count()">count</button>
+    <ul id="ul">
+      <li>chicken</li>
+      <li>water</li>
+      <li>jain thali</li>
+    </ul>
+
+    <script>
+      let order = JSON.parse(localStorage.getItem("order")) || [];
+
+      function add() {
+        let item = document.getElementById("value").value;
+        let ul = document.getElementById("ul");
+        let li = document.createElement("li");
+
+        ul.append(li);
+        li.textContent = item;
+
+        order.push(item);
+
+        order.push(item);
+        localStorage.setItem("order", JSON.stringify(order));
+      }
+
+      function update() {
+        let item = document.getElementById("value").value;
+        let item2 = document.getElementById("value1").value;
+
+        for (let index = 0; index < order.length; index++) {
+          if (order[index] == item) {
+            order[index] = item2;
+          }
+        }
+      }
+
+      function count() {
+        let count = 3 + order.length;
+        alert(count);
+      }
+    </script>
+  </body>
+</html>

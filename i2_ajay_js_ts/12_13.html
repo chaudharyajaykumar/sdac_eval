@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>reigister with us</h2>
+    name: <input type="text" id="name" /><br />
+    email: <input type="email" id="email" /><br />
+    password: <input type="password" id="pass" /><br />
+    <button onclick="register()">register</button>
+    <script>
+      function register() {
+        let name = document.getElementById("name").value;
+        let email = document.getElementById("email").value;
+        let pass = document.getElementById("pass").value;
+
+        let n_regex = /^[A-Za-z\s]+$/;
+        let e_regex = /^[A-Za-z\d%.+-]+@[A-Za-z\d.-]+\.[A-Za-z]{3,8}$/;
+        let p_regex =
+          /^(?=.*[A-Z])(?=.*[a-z])(?=.*[\d])(?=.*[!@#$%^*-])[(?=.*[A-Z])[A-Za-z\d!@#$%^&*-]{8,15}$/;
+
+        if (!name || !email || !pass) {
+          alert("enter all field");
+          return;
+        }
+
+        if (!n_regex.test(name)) {
+          alert("enter correct name format");
+          return;
+        }
+
+        if (!e_regex.test(email)) {
+          alert("enter correct email format");
+          return;
+        }
+        if (!p_regex.test(pass)) {
+          alert("enter correct pass format");
+          return;
+        }
+
+        let data = [];
+        let customer = JSON.parse(localStorage.getItem("customer")) || [];
+        customer.push(data);
+        localStorage.setItem("customer", JSON.stringify(data));
+      }
+    </script>
+  </body>
+</html>
